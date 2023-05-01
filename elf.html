@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Elf</title>
+    <style>
+    .centerbackground {
+        width: 100%;
+        height: 100vh;
+        background-image: linear-gradient(rgba(0, 0, 0, 0.6),rgba(0, 0, 0, 0.9)),url(elf.jpg);
+        background-size: cover;
+        background-position: left;
+    }
+    * {
+        margin: 0;
+        padding: 0%;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+    .header {
+        text-align: center;
+        position: absolute;
+        top: 15%;
+        width: 100%;
+        pointer-events: none;
+    }
+    .header h1 {
+        color: lightblue;
+        font-size: 52px;
+    }
+    .header p {
+        color: #fff;
+        font-size: 50px;
+    }
+    .description {
+        text-align: center;
+        position: absolute;
+        top: 35%;
+        width: 100%;
+        color: #fff;
+        font-size: x-large;
+        pointer-events: none;     
+    }
+    .description p {
+        padding: 10px;
+    }
+    .box {
+        display: grid;
+        position: relative;
+        grid-template-columns: 150px 150px;
+        grid-gap: 1vw;
+        padding-top: 7%;
+        padding-left: 3%;
+    }
+    .boxheader {
+        background: rgba(255,255,255,0.2);
+        position: relative;
+        text-align: center;
+        font-size: 20px;
+        padding: 20%;
+        color: #fff;
+    }
+    .boxitem {
+        background: rgba(255,255,255,0.5);
+        width: 50%;
+        height: 80px;
+        font-size: x-large;
+        border-radius: 150px;
+        text-align: center;
+    }
+    .skills {
+        color: #fff;
+        top: 7%;
+        position: absolute;
+        left: 3%;
+    }
+    .skills h1 {
+        font-size: 30px;
+    }
+    .extras {
+        right: 37%;
+        position: absolute;
+        text-align: center;
+        top: 70%;
+        border: #fff;
+    }
+    .extras textarea {
+        padding: 5px;
+        background-color: rgba(255, 255, 255, 0.2);
+        color: #fff;
+    }
+    .gear {
+        position: absolute;
+        text-align: right;
+        top: 30%;
+        right: 5%;
+    }
+    .gear textarea {
+        padding: 5px;
+        background-color: rgba(0, 0, 0, 0);
+        color: #fff;
+        border-width: 3px;
+        border-color: lightblue;
+    }
+    .gear label {
+        font-size: 50px;
+        color: lightblue;
+        pointer-events: none;
+    }
+    .backhome {
+        position: absolute;
+        text-align: right;
+        top: 90%;
+        right: 5%;
+    }
+    .backhome a {
+        color: lightblue;
+    }
+    .modifier {
+        color: #fff;
+        font-size: x-large;
+        padding: 10%;
+    }
+    </style>
+</head>
+<body onload="get()">
+    <div class="centerbackground">
+        <div class="skills">
+            <h1>Skills:</h1>
+            <p>you can either roll manually or use standard array (15,14,13,12,10,8)</p>
+        </div>
+        <div class="box">
+            <div class="boxheader" id="strength">STR:</div>
+            <div>
+                <form onsubmit="savestrength()">
+                    <input type="text" id="strengthInput" class="boxitem">
+                    <span id="strengthmodifier" class="modifier">0</span>
+                </form>
+            </div>
+            <div class="boxheader" id="dex">DEX:</div>
+            <div>
+                <form onsubmit="savedex()">
+                    <input type="text" id="dexInput" class="boxitem">
+                    <span id="dexmodifier" class="modifier">0</span>
+                </form>
+            </div>
+            <div class="boxheader" id="con">CON:</div>
+            <div>
+                <form onsubmit="savecon()">
+                    <input type="text" id="conInput" class="boxitem">
+                    <span id="conmodifier" class="modifier">0</span>
+                </form>
+            </div>
+            <div class="boxheader" id="int">INT:</div>
+            <div>
+                <form onsubmit="saveint()">
+                    <input type="text" id="intInput" class="boxitem">
+                    <span id="intmodifier" class="modifier">0</span>
+                </form>
+            </div>
+            <div class="boxheader" id="wis">WIS:</div>
+            <div>
+                <form onsubmit="savewis()">
+                    <input type="text" id="wisInput" class="boxitem">
+                    <span id="wismodifier" class="modifier">0</span>
+                </form>
+            </div>
+            <div class="boxheader" id="cha">CHA:</div>
+            <div>
+                <form onsubmit="savecha()">
+                    <input type="text" id="chaInput" class="boxitem">
+                    <span id="chamodifier" class="modifier">0</span>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="header">
+        <h1>You chose...</h1>
+        <p>ELF!</p>
+    </div>
+    <div class="description">
+        <p>There are many kinds of elves, most notably wood and high elves</p>
+        <p>Depending on which of these you choose, you gain different skills</p>
+        <p>Elves live long and full lives, often surpassing age 700</p>
+        <p>They are also slightly smaller than the average human</p>
+    </div>
+    <div class="extras">
+        <form>
+            <textarea rows="10" cols="55">extra information (such as class type):
+            </textarea>
+        </form>
+    </div>
+    <div class="gear">
+        <label>Gear:</label>
+        <form>
+            <textarea  cols="30" rows="5">Armor:</textarea>
+        </form>
+        <form>
+            <textarea cols="30" rows="5">Weapons:</textarea>
+        </form>
+    </div>
+    <div class="backhome">
+        <a href="DnD webpage.html">return home</a>
+    </div>
+</body>
+<script>
+    var storedStrength = localStorage.getItem("storedStrength");
+    var storedDex = localStorage.getItem("storedDex");
+    var storedCon = localStorage.getItem("storedCon");
+    var storedInt = localStorage.getItem("storedInt");
+    var storedWis = localStorage.getItem("storedWis");
+    var storedCha = localStorage.getItem("storedCha");
+    function savestrength() {
+        var strengthskill = document.getElementById("strengthInput").value;
+        localStorage.setItem("storedStrength", strengthskill)
+    }
+    function savedex() {
+        var dexskill = document.getElementById("dexInput").value;
+        localStorage.setItem("storedDex", dexskill)
+    }function savecon() {
+        var conskill = document.getElementById("conInput").value;
+        localStorage.setItem("storedCon", conskill)
+    }function saveint() {
+        var intskill = document.getElementById("intInput").value;
+        localStorage.setItem("storedInt", intskill)
+    }function savewis() {
+        var wisskill = document.getElementById("wisInput").value;
+        localStorage.setItem("storedWis", wisskill)
+    }function savecha() {
+        var chaskill = document.getElementById("chaInput").value;
+        localStorage.setItem("storedCha", chaskill)
+    }
+    function get() {
+        localStorage.getItem("storedStrength");
+        document.getElementById("strength").innerHTML = "STR:" + storedStrength;
+        if (storedStrength>=20) {
+            document.querySelector("#strengthmodifier").innerHTML = 5;
+        } else if (storedStrength>=18) {
+            document.querySelector("#strengthmodifier").innerHTML = 4;
+        } else if (storedStrength>=16) {
+            document.querySelector("#strengthmodifier").innerHTML = 3;
+        } else if (storedStrength>=14) {
+            document.querySelector("#strengthmodifier").innerHTML = 2;
+        } else if (storedStrength>=12) {
+            document.querySelector("#strengthmodifier").innerHTML = 1;
+        } else if (storedStrength>=10) {
+            document.querySelector("#strengthmodifier").innerHTML = 0;
+        } else if (storedStrength>=8) {
+            document.querySelector("#strengthmodifier").innerHTML = -1;
+        } else if (storedStrength>=6) {
+            document.querySelector("#strengthmodifier").innerHTML = -2;
+        } else if (storedStrength>=4) {
+            document.querySelector("#strengthmodifier").innerHTML = -3;
+        } else if (storedStrength>=2) {
+            document.querySelector("#strengthmodifier").innerHTML = -4;
+        } else {
+            document.querySelector("#strengthmodifier").innerHTML = "?";
+        }
+        localStorage.getItem("storedDex");
+        document.getElementById("dex").innerHTML = "DEX:" + storedDex + "+2";
+        if (storedDex>18) {
+            document.querySelector("#dexmodifier").innerHTML = 5;
+        } else if (storedDex>=16) {
+            document.querySelector("#dexmodifier").innerHTML = 4;
+        } else if (storedDex>=14) {
+            document.querySelector("#dexmodifier").innerHTML = 3;
+        } else if (storedDex>=12) {
+            document.querySelector("#dexmodifier").innerHTML = 2;
+        } else if (storedDex>=10) {
+            document.querySelector("#dexmodifier").innerHTML = 1;
+        } else if (storedDex>=8) {
+            document.querySelector("#dexmodifier").innerHTML = 0;
+        } else if (storedDex>=6) {
+            document.querySelector("#dexmodifier").innerHTML = -1;
+        } else if (storedDex>=4) {
+            document.querySelector("#dexmodifier").innerHTML = -2;
+        } else if (storedDex>=2) {
+            document.querySelector("#dexmodifier").innerHTML = -3;
+        } else if (storedDex>=0) {
+            document.querySelector("#dexmodifier").innerHTML = -4;
+        } else {
+            document.querySelector("#dexmodifier").innerHTML = "?";
+        }
+        localStorage.getItem("storedCon");
+        document.getElementById("con").innerHTML = "CON:" + storedCon;
+        if (storedCon>=20) {
+            document.querySelector("#conmodifier").innerHTML = 5;
+        } else if (storedCon>=18) {
+            document.querySelector("#conmodifier").innerHTML = 4;
+        } else if (storedCon>=16) {
+            document.querySelector("#conmodifier").innerHTML = 3;
+        } else if (storedCon>=14) {
+            document.querySelector("#conmodifier").innerHTML = 2;
+        } else if (storedCon>=12) {
+            document.querySelector("#conmodifier").innerHTML = 1;
+        } else if (storedCon>=10) {
+            document.querySelector("#conmodifier").innerHTML = 0;
+        } else if (storedCon>=8) {
+            document.querySelector("#conmodifier").innerHTML = -1;
+        } else if (storedCon>=6) {
+            document.querySelector("#conmodifier").innerHTML = -2;
+        } else if (storedCon>=4) {
+            document.querySelector("#conmodifier").innerHTML = -3;
+        } else if (storedCon>=2) {
+            document.querySelector("#conmodifier").innerHTML = -4;
+        } else {
+            document.querySelector("#conmodifier").innerHTML = "?";
+        }
+        localStorage.getItem("storedInt");
+        document.getElementById("int").innerHTML = "INT:" + storedInt;
+        if (storedInt>=20) {
+            document.querySelector("#intmodifier").innerHTML = 5;
+        } else if (storedInt>=18) {
+            document.querySelector("#intmodifier").innerHTML = 4;
+        } else if (storedInt>=16) {
+            document.querySelector("#intmodifier").innerHTML = 3;
+        } else if (storedInt>=14) {
+            document.querySelector("#intmodifier").innerHTML = 2;
+        } else if (storedInt>=12) {
+            document.querySelector("#intmodifier").innerHTML = 1;
+        } else if (storedInt>=10) {
+            document.querySelector("#intmodifier").innerHTML = 0;
+        } else if (storedInt>=8) {
+            document.querySelector("#intmodifier").innerHTML = -1;
+        } else if (storedInt>=6) {
+            document.querySelector("#intmodifier").innerHTML = -2;
+        } else if (storedInt>=4) {
+            document.querySelector("#intmodifier").innerHTML = -3;
+        } else if (storedInt>=2) {
+            document.querySelector("#intmodifier").innerHTML = -4;
+        } else {
+            document.querySelector("#intmodifier").innerHTML = "?";
+        }
+        localStorage.getItem("storedWis");
+        document.getElementById("wis").innerHTML = "WIS:" + storedWis;
+        if (storedWis>=20) {
+            document.querySelector("#wismodifier").innerHTML = 5;
+        } else if (storedWis>=18) {
+            document.querySelector("#wismodifier").innerHTML = 4;
+        } else if (storedWis>=16) {
+            document.querySelector("#wismodifier").innerHTML = 3;
+        } else if (storedWis>=14) {
+            document.querySelector("#wismodifier").innerHTML = 2;
+        } else if (storedWis>=12) {
+            document.querySelector("#wismodifier").innerHTML = 1;
+        } else if (storedWis>=10) {
+            document.querySelector("#wismodifier").innerHTML = 0;
+        } else if (storedWis>=8) {
+            document.querySelector("#wismodifier").innerHTML = -1;
+        } else if (storedWis>=6) {
+            document.querySelector("#wismodifier").innerHTML = -2;
+        } else if (storedWis>=4) {
+            document.querySelector("#wismodifier").innerHTML = -3;
+        } else if (storedWis>=2) {
+            document.querySelector("#wismodifier").innerHTML = -4;
+        } else {
+            document.querySelector("#wismodifier").innerHTML = "?";
+        }
+        localStorage.getItem("storedCha");
+        document.getElementById("cha").innerHTML = "CHA:" + storedCha;
+        if (storedCha>=20) {
+            document.querySelector("#chamodifier").innerHTML = 5;
+        } else if (storedCha>=18) {
+            document.querySelector("#chamodifier").innerHTML = 4;
+        } else if (storedCha>=16) {
+            document.querySelector("#chamodifier").innerHTML = 3;
+        } else if (storedCha>=14) {
+            document.querySelector("#chamodifier").innerHTML = 2;
+        } else if (storedCha>=12) {
+            document.querySelector("#chamodifier").innerHTML = 1;
+        } else if (storedCha>=10) {
+            document.querySelector("#chamodifier").innerHTML = 0;
+        } else if (storedCha>=8) {
+            document.querySelector("#chamodifier").innerHTML = -1;
+        } else if (storedCha>=6) {
+            document.querySelector("#chamodifier").innerHTML = -2;
+        } else if (storedCha>=4) {
+            document.querySelector("#chamodifier").innerHTML = -3;
+        } else if (storedCha>=2) {
+            document.querySelector("#chamodifier").innerHTML = -4;
+        } else {
+            document.querySelector("#chamodifier").innerHTML = "?";
+        }
+    }
+</script>
+</html>
